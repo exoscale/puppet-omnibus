@@ -2,7 +2,7 @@ PUPPET_GIT    := $(or ${upstream_puppet_git},"https://github.com/exoscale/pkg-pu
 VERSION       := $(or ${puppet_version},"3.8.5")
 ITERATION     := $(or ${puppet_vendor_version},y7)
 PACKAGE_NAME  := "puppet-omnibus"
-PKG_ITERATION := exo4
+PKG_ITERATION := exo5
 
 .PHONY: dist docker itest package clean
 
