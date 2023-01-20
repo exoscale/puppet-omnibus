@@ -38,9 +38,17 @@ mv pkg/puppet-$PUPPET_VERSION.gem /package/vendor/
 cd /package
 gem install json_pure -v 2.5.1
 gem install /package/vendor/puppet-$PUPPET_VERSION.gem
+
+# Patch facter
+mkdir /tmp/exo_facter ; cd /tmp/exo_facter
+git clone https://github.com/exoscale/pkg-facter --branch=focal --depth=1
 FACTER_RB=$(/opt/puppet-omnibus/embedded/bin/gem which facter)
 cd ${FACTER_RB::-3} # strip .rb from facter path to get the folder
-patch -p9 < /tmp/facter.patch
+cd ../../
+for i in 0002-Exclude-interfaces-facts.patch 0003-Exclude-ipaddress-facts.patch ; do
+	patch -p1 < /tmp/exo_facter/pkg-facter/debian/patches/$i
+done
+
 cd /package
 bundle install --local --path /tmp
 FPM_CACHE_DIR=/package/vendor bundle exec fpm-cook clean
