@@ -12,7 +12,7 @@ node {
       updateGithubCommitStatus('PENDING', "${env.WORKSPACE}/src")
 
       stage('Build debian package') {
-	sh 'make jammy_package'
+	sh 'make jammy_package EXOSCALE_DOCKER_REGISTRY=${EXOSCALE_DOCKER_REGISTRY}'
       }
 
       stage('Upload Debian package') {
