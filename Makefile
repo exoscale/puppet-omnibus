@@ -3,7 +3,7 @@ VERSION       := $(or ${puppet_version},"3.8.5")
 ITERATION     := $(or ${puppet_vendor_version},y7)
 PACKAGE_NAME  := "puppet-omnibus"
 PKG_ITERATION := exo5
-DOCKER_REGISTRY := $(or ${EXOSCALE_DOCKER_REGISTRY}, "registry.internal.exoscale.ch")
+EXOSCALE_DOCKER_REGISTRY ?= "registry.internal.exoscale.ch"
 
 .PHONY: dist docker itest package clean
 
