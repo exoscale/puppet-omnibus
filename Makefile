@@ -3,6 +3,7 @@ VERSION       := $(or ${puppet_version},"3.8.5")
 ITERATION     := $(or ${puppet_vendor_version},y7)
 PACKAGE_NAME  := "puppet-omnibus"
 PKG_ITERATION := exo5
+EXOSCALE_DOCKER_REGISTRY ?= "registry.internal.exoscale.ch"
 
 .PHONY: dist docker itest package clean
 
@@ -46,7 +47,7 @@ puppet_exo:
 
 docker: require_os
 	flock /tmp/puppet_omnibus_$(OS)_docker_build.lock \
-	docker build -f Dockerfile.$(OS) -t package_puppet_omnibus_$(OS) .
+	docker build -f Dockerfile.$(OS) -t package_puppet_omnibus_$(OS) --build-arg EXOSCALE_DOCKER_REGISTRY=$(EXOSCALE_DOCKER_REGISTRY) .
 
 package: require_os dist puppet_exo docker
 	docker run \

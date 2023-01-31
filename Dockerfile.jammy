@@ -1,4 +1,6 @@
-FROM registry.internal.exoscale.ch/exoscale/ubuntu:jammy
+ARG EXOSCALE_DOCKER_REGISTRY=registry.internal.exoscale.ch
+
+FROM ${EXOSCALE_DOCKER_REGISTRY}/exoscale/ubuntu:jammy
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get --yes --force-yes install \
